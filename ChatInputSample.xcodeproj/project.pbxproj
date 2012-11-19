@@ -18,6 +18,21 @@
 		9601A0BB165ACF0C00D30B22 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0BA165ACF0C00D30B22 /* Default-568h@2x.png */; };
 		9601A0BE165ACF0C00D30B22 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601A0BD165ACF0C00D30B22 /* ViewController.m */; };
 		9601A0C1165ACF0C00D30B22 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0BF165ACF0C00D30B22 /* ViewController.xib */; };
+		9601A0D6165ACFAB00D30B22 /* Chat_Footer_ArrowUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0C8165ACFAB00D30B22 /* Chat_Footer_ArrowUp.png */; };
+		9601A0D7165ACFAB00D30B22 /* Chat_Footer_ArrowUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0C9165ACFAB00D30B22 /* Chat_Footer_ArrowUp@2x.png */; };
+		9601A0D8165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0CA165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed.png */; };
+		9601A0D9165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0CB165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed@2x.png */; };
+		9601A0DA165ACFAB00D30B22 /* Chat_Footer_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0CC165ACFAB00D30B22 /* Chat_Footer_BG.png */; };
+		9601A0DB165ACFAB00D30B22 /* Chat_Footer_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0CD165ACFAB00D30B22 /* Chat_Footer_BG@2x.png */; };
+		9601A0DC165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0CE165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon.png */; };
+		9601A0DD165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0CF165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon@2x.png */; };
+		9601A0DE165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0D0165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed.png */; };
+		9601A0DF165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0D1165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed@2x.png */; };
+		9601A0E0165ACFAB00D30B22 /* Chat_Send_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0D2165ACFAB00D30B22 /* Chat_Send_Button.png */; };
+		9601A0E1165ACFAB00D30B22 /* Chat_Send_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0D3165ACFAB00D30B22 /* Chat_Send_Button@2x.png */; };
+		9601A0E2165ACFAB00D30B22 /* Chat_Send_Button_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0D4165ACFAB00D30B22 /* Chat_Send_Button_Pressed.png */; };
+		9601A0E3165ACFAB00D30B22 /* Chat_Send_Button_Pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0D5165ACFAB00D30B22 /* Chat_Send_Button_Pressed@2x.png */; };
+		9601A0E6165ACFDD00D30B22 /* THChatInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601A0E5165ACFDD00D30B22 /* THChatInput.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +52,22 @@
 		9601A0BC165ACF0C00D30B22 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9601A0BD165ACF0C00D30B22 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9601A0C0165ACF0C00D30B22 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		9601A0C8165ACFAB00D30B22 /* Chat_Footer_ArrowUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_Footer_ArrowUp.png; sourceTree = "<group>"; };
+		9601A0C9165ACFAB00D30B22 /* Chat_Footer_ArrowUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat_Footer_ArrowUp@2x.png"; sourceTree = "<group>"; };
+		9601A0CA165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_Footer_ArrowUp_Pressed.png; sourceTree = "<group>"; };
+		9601A0CB165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat_Footer_ArrowUp_Pressed@2x.png"; sourceTree = "<group>"; };
+		9601A0CC165ACFAB00D30B22 /* Chat_Footer_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_Footer_BG.png; sourceTree = "<group>"; };
+		9601A0CD165ACFAB00D30B22 /* Chat_Footer_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat_Footer_BG@2x.png"; sourceTree = "<group>"; };
+		9601A0CE165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_Footer_Smiley_Icon.png; sourceTree = "<group>"; };
+		9601A0CF165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat_Footer_Smiley_Icon@2x.png"; sourceTree = "<group>"; };
+		9601A0D0165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_Footer_Smiley_Icon_Pressed.png; sourceTree = "<group>"; };
+		9601A0D1165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat_Footer_Smiley_Icon_Pressed@2x.png"; sourceTree = "<group>"; };
+		9601A0D2165ACFAB00D30B22 /* Chat_Send_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_Send_Button.png; sourceTree = "<group>"; };
+		9601A0D3165ACFAB00D30B22 /* Chat_Send_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat_Send_Button@2x.png"; sourceTree = "<group>"; };
+		9601A0D4165ACFAB00D30B22 /* Chat_Send_Button_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_Send_Button_Pressed.png; sourceTree = "<group>"; };
+		9601A0D5165ACFAB00D30B22 /* Chat_Send_Button_Pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat_Send_Button_Pressed@2x.png"; sourceTree = "<group>"; };
+		9601A0E4165ACFDD00D30B22 /* THChatInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THChatInput.h; sourceTree = "<group>"; };
+		9601A0E5165ACFDD00D30B22 /* THChatInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THChatInput.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +119,9 @@
 				9601A0BC165ACF0C00D30B22 /* ViewController.h */,
 				9601A0BD165ACF0C00D30B22 /* ViewController.m */,
 				9601A0BF165ACF0C00D30B22 /* ViewController.xib */,
+				9601A0E4165ACFDD00D30B22 /* THChatInput.h */,
+				9601A0E5165ACFDD00D30B22 /* THChatInput.m */,
+				9601A0C7165ACFAB00D30B22 /* Resources */,
 				9601A0AB165ACF0C00D30B22 /* Supporting Files */,
 			);
 			path = ChatInputSample;
@@ -105,6 +139,27 @@
 				9601A0BA165ACF0C00D30B22 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9601A0C7165ACFAB00D30B22 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9601A0C8165ACFAB00D30B22 /* Chat_Footer_ArrowUp.png */,
+				9601A0C9165ACFAB00D30B22 /* Chat_Footer_ArrowUp@2x.png */,
+				9601A0CA165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed.png */,
+				9601A0CB165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed@2x.png */,
+				9601A0CC165ACFAB00D30B22 /* Chat_Footer_BG.png */,
+				9601A0CD165ACFAB00D30B22 /* Chat_Footer_BG@2x.png */,
+				9601A0CE165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon.png */,
+				9601A0CF165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon@2x.png */,
+				9601A0D0165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed.png */,
+				9601A0D1165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed@2x.png */,
+				9601A0D2165ACFAB00D30B22 /* Chat_Send_Button.png */,
+				9601A0D3165ACFAB00D30B22 /* Chat_Send_Button@2x.png */,
+				9601A0D4165ACFAB00D30B22 /* Chat_Send_Button_Pressed.png */,
+				9601A0D5165ACFAB00D30B22 /* Chat_Send_Button_Pressed@2x.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +218,20 @@
 				9601A0B9165ACF0C00D30B22 /* Default@2x.png in Resources */,
 				9601A0BB165ACF0C00D30B22 /* Default-568h@2x.png in Resources */,
 				9601A0C1165ACF0C00D30B22 /* ViewController.xib in Resources */,
+				9601A0D6165ACFAB00D30B22 /* Chat_Footer_ArrowUp.png in Resources */,
+				9601A0D7165ACFAB00D30B22 /* Chat_Footer_ArrowUp@2x.png in Resources */,
+				9601A0D8165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed.png in Resources */,
+				9601A0D9165ACFAB00D30B22 /* Chat_Footer_ArrowUp_Pressed@2x.png in Resources */,
+				9601A0DA165ACFAB00D30B22 /* Chat_Footer_BG.png in Resources */,
+				9601A0DB165ACFAB00D30B22 /* Chat_Footer_BG@2x.png in Resources */,
+				9601A0DC165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon.png in Resources */,
+				9601A0DD165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon@2x.png in Resources */,
+				9601A0DE165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed.png in Resources */,
+				9601A0DF165ACFAB00D30B22 /* Chat_Footer_Smiley_Icon_Pressed@2x.png in Resources */,
+				9601A0E0165ACFAB00D30B22 /* Chat_Send_Button.png in Resources */,
+				9601A0E1165ACFAB00D30B22 /* Chat_Send_Button@2x.png in Resources */,
+				9601A0E2165ACFAB00D30B22 /* Chat_Send_Button_Pressed.png in Resources */,
+				9601A0E3165ACFAB00D30B22 /* Chat_Send_Button_Pressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +245,7 @@
 				9601A0B1165ACF0C00D30B22 /* main.m in Sources */,
 				9601A0B5165ACF0C00D30B22 /* AppDelegate.m in Sources */,
 				9601A0BE165ACF0C00D30B22 /* ViewController.m in Sources */,
+				9601A0E6165ACFDD00D30B22 /* THChatInput.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +325,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatInputSample/ChatInputSample-Prefix.pch";
 				INFOPLIST_FILE = "ChatInputSample/ChatInputSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -266,6 +337,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatInputSample/ChatInputSample-Prefix.pch";
 				INFOPLIST_FILE = "ChatInputSample/ChatInputSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
