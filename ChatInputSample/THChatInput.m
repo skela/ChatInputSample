@@ -173,6 +173,8 @@
 }
 
 
+#pragma mark THChatInput Delegate
+
 - (void) sendButtonPressed:(id)sender {
    
    if ([_delegate respondsToSelector:@selector(sendButtonPressed:)])
