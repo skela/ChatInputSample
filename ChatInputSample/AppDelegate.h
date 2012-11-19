@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  ChatInputSample
 //
-//  Created by Office on 20.11.12.
+//  Created by Marat Alekperov (m.alekperov@gmail.com) on 20.11.12.
 //  Copyright (c) 2012 Me and Myself. All rights reserved.
 //
 
