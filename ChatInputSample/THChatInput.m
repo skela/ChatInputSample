@@ -18,11 +18,13 @@
 	_inputBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
 	_inputBackgroundView.autoresizingMask = UIViewAutoresizingNone;
    _inputBackgroundView.contentMode = UIViewContentModeScaleToFill;
-	_inputBackgroundView.userInteractionEnabled = YES;
+	//_inputBackgroundView.userInteractionEnabled = YES;
    //_inputBackgroundView.alpha = .5;
+   _inputBackgroundView.backgroundColor = [UIColor clearColor];
+   //_inputBackgroundView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:.5];
 	[self addSubview:_inputBackgroundView];
    [_inputBackgroundView release];
-	   
+   
 	// Text field
 	_textView = [[UITextView alloc] initWithFrame:CGRectMake(70.0f, 0, 185, 0)];
    _textView.backgroundColor = [UIColor clearColor];
@@ -73,13 +75,16 @@
    [_sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self addSubview:_sendButton];
    [_sendButton release];
+   
+   [self sendSubviewToBack:_inputBackgroundView];
 }
 
 - (void) awakeFromNib {
    
    _inputHeight = 38.0f;
-   _inputHeightWithShadow = 44.0f; // set it with shadow height in pixels more than _inputHeight, f.e. 44.0f for 6 pixels shadow;
-   
+   _inputHeightWithShadow = 44.0f;
+   _autoResizeOnKeyboardVisibilityChanged = YES;
+
    [self composeView];
 }
 
@@ -92,7 +97,7 @@
     {
        int h = h2 == h1 ? _inputHeightWithShadow : h2 + 24;
        int delta = h - self.frame.size.height;
-       CGRect r2 = CGRectMake(0, self.frame.origin.y - delta, self.superview.frame.size.width, h);
+       CGRect r2 = CGRectMake(0, self.frame.origin.y - delta, self.frame.size.width, h);
        self.frame = r2; //CGRectMake(0, self.frame.origin.y - delta, self.superview.frame.size.width, h);
        _inputBackgroundView.frame = CGRectMake(0, 0, self.frame.size.width, h);
        
@@ -113,6 +118,10 @@
    
    if (self)
    {
+      _inputHeight = 38.0f;
+      _inputHeightWithShadow = 44.0f;
+      _autoResizeOnKeyboardVisibilityChanged = YES;
+      
       [self composeView];
    }
    return self;
@@ -123,31 +132,47 @@
    [self adjustTextInputHeightForText:_textView.text animated:YES];
 }
 
+- (void) setText:(NSString*)text {
+   
+   _textView.text = text;
+   _lblPlaceholder.hidden = text.length > 0;
+   [self fitText];
+}
+
 
 #pragma mark UITextFieldDelegate Delegate
 
 - (void) textViewDidBeginEditing:(UITextView*)textView {
    
-   [UIView animateWithDuration:.25f animations:^{
-      CGRect r = self.frame;
-      r.origin.y -= 216;
-      [self setFrame:r];
-   }];
-
-   [self fitText];
+   if (_autoResizeOnKeyboardVisibilityChanged)
+   {
+      [UIView animateWithDuration:.25f animations:^{
+         CGRect r = self.frame;
+         r.origin.y -= 216;
+         [self setFrame:r];
+      }];
+      [self fitText];
+   }
+   if ([_delegate respondsToSelector:@selector(textViewDidBeginEditing:)])
+      [_delegate performSelector:@selector(textViewDidBeginEditing:) withObject:textView];
 }
 
 - (void) textViewDidEndEditing:(UITextView*)textView {
    
-   [UIView animateWithDuration:.25f animations:^{
-      CGRect r = self.frame;
-      r.origin.y += 216;
-      [self setFrame:r];
-   }];
-
-   [self fitText];
-   
+   if (_autoResizeOnKeyboardVisibilityChanged)
+   {
+      [UIView animateWithDuration:.25f animations:^{
+         CGRect r = self.frame;
+         r.origin.y += 216;
+         [self setFrame:r];
+      }];
+      
+      [self fitText];
+   }
    _lblPlaceholder.hidden = _textView.text.length > 0;
+   
+   if ([_delegate respondsToSelector:@selector(textViewDidEndEditing:)])
+      [_delegate performSelector:@selector(textViewDidEndEditing:) withObject:textView];
 }
 
 - (BOOL) textView:(UITextView*)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text {
@@ -170,6 +195,9 @@
     _lblPlaceholder.hidden = _textView.text.length > 0;
    
    [self fitText];
+   
+   if ([_delegate respondsToSelector:@selector(textViewDidChange:)])
+      [_delegate performSelector:@selector(textViewDidChange:) withObject:textView];
 }
 
 
@@ -178,19 +206,23 @@
 - (void) sendButtonPressed:(id)sender {
    
    if ([_delegate respondsToSelector:@selector(sendButtonPressed:)])
-      [_delegate performSelector:@selector(sendButtonPressed:) withObject:sender afterDelay:.0];
+      [_delegate performSelector:@selector(sendButtonPressed:) withObject:sender];
 }
 
 - (void) showAttachInput:(id)sender {
    
    if ([_delegate respondsToSelector:@selector(showAttachInput:)])
-      [_delegate performSelector:@selector(showAttachInput:) withObject:sender afterDelay:.0];
+      [_delegate performSelector:@selector(showAttachInput:) withObject:sender];
 }
 
 - (void) showEmojiInput:(id)sender {
    
    if ([_delegate respondsToSelector:@selector(showEmojiInput:)])
-      [_delegate performSelector:@selector(showEmojiInput:) withObject:sender afterDelay:.0];
+   {
+      if ([_textView isFirstResponder] == NO) [_textView becomeFirstResponder];
+
+      [_delegate performSelector:@selector(showEmojiInput:) withObject:sender];
+   }
 }
 
 @end

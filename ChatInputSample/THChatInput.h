@@ -12,6 +12,7 @@
 
 @property (assign) int inputHeight;
 @property (assign) int inputHeightWithShadow;
+@property (assign) BOOL autoResizeOnKeyboardVisibilityChanged;
 
 @property (strong, nonatomic) UIButton* sendButton;
 @property (strong, nonatomic) UIButton* attachButton;
@@ -21,5 +22,7 @@
 @property (strong, nonatomic) UIImageView* inputBackgroundView;
 
 - (void) fitText;
+
+- (void) setText:(NSString*)text;
 
 @end
