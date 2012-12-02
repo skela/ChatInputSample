@@ -1,5 +1,5 @@
 //
-//  Created by Marat Alekperov (m.alekperov@gmail.com) on 18.11.12.
+//  Created by Marat Alekperov (aka Timur Harleev) (m.alekperov@gmail.com) on 18.11.12.
 //  Copyright (c) 2012 Me and Myself. All rights reserved.
 //
 
