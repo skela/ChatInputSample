@@ -57,7 +57,9 @@ static BOOL isIos7;
 {
     isIos7 = [[[UIDevice currentDevice] systemVersion] floatValue]>=7;
     
-   CGSize size = self.frame.size;
+    topGap = isIos7 ? 8 : 12;
+   
+    CGSize size = self.frame.size;
    
    // Input
 	_inputBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
@@ -81,7 +83,7 @@ static BOOL isIos7;
     [_textViewBackgroundView release];
     
 	// Text field
-	_textView = [[UITextView alloc] initWithFrame:CGRectMake(70.0f, 0, 185, 0)];
+	_textView = [[UITextView alloc] initWithFrame:CGRectMake(70.0f, topGap, 185, 0)];
    _textView.backgroundColor = [UIColor clearColor];
    //_textView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:.3];
 	_textView.delegate = self;
@@ -94,7 +96,7 @@ static BOOL isIos7;
    
    [self adjustTextInputHeightForText:@"" animated:NO];
    
-   _lblPlaceholder = [[UILabel alloc] initWithFrame:CGRectMake(78.0f, 14, 160, 20)];
+   _lblPlaceholder = [[UILabel alloc] initWithFrame:CGRectMake(78.0f, topGap+2, 160, 20)];
    _lblPlaceholder.font = [UIFont systemFontOfSize:15.0f];
    _lblPlaceholder.text = @"Type here...";
    _lblPlaceholder.textColor = [UIColor lightGrayColor];
@@ -105,14 +107,14 @@ static BOOL isIos7;
 	// Attach buttons
 	_attachButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
     _attachButton.hidden = YES;
-	_attachButton.frame = CGRectMake(6.0f, 12.0f, 26.0f, 27.0f);
+	_attachButton.frame = CGRectMake(6.0f, topGap, 26.0f, 27.0f);
 	_attachButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
    [_attachButton addTarget:self action:@selector(showAttachInput:) forControlEvents:UIControlEventTouchUpInside];
 	[self addSubview:_attachButton];
    [_attachButton release];
 	
 	_emojiButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-	_emojiButton.frame = CGRectMake(12.0f + _attachButton.frame.size.width, 12.0f, 26.0f, 27.0f);
+	_emojiButton.frame = CGRectMake(12.0f + _attachButton.frame.size.width, topGap, 26.0f, 27.0f);
     _emojiButton.hidden = YES;
 	_emojiButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
    [_emojiButton addTarget:self action:@selector(showEmojiInput:) forControlEvents:UIControlEventTouchUpInside];
@@ -135,10 +137,15 @@ static BOOL isIos7;
    
    [self sendSubviewToBack:_inputBackgroundView];
     
-    self.backgroundColor = [UIColor clearColor];
-    _inputBackgroundView.image = [[UIImage imageNamed:@"Chat_Footer_BG.png"] stretchableImageWithLeftCapWidth:80 topCapHeight:25];
-    //_textViewBackgroundView.image = [[UIImage imageNamed:@"Chat_Footer_Input.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:0];
-    //self.backgroundColor = [UIColor colorWithRed:(0xD9 / 255.0) green:(0xDC / 255.0) blue:(0xE0 / 255.0) alpha:1.0];
+    if (isIos7)
+    {
+        self.backgroundColor = [UIColor colorWithRed:(0xD9 / 255.0) green:(0xDC / 255.0) blue:(0xE0 / 255.0) alpha:1.0];
+    }
+    else
+    {
+        self.backgroundColor = [UIColor clearColor];
+        _inputBackgroundView.image = [[UIImage imageNamed:@"Chat_Footer_BG.png"] stretchableImageWithLeftCapWidth:80 topCapHeight:25];
+    }
     
 	[_attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp.png"] forState:UIControlStateNormal];
 	[_attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp_Pressed.png"] forState:UIControlStateHighlighted];
@@ -175,7 +182,9 @@ static BOOL isIos7;
     CGRect f = _textView.frame;
     f.size.height = f.size.height+(isIos7?3:0);
     _textViewBackgroundView.frame = f;
-    _lblPlaceholder.frame = CGRectMake(x+8, 14, 160, 20);
+    _lblPlaceholder.frame = CGRectMake(x+8, topGap+2, 160, 20);
+    
+    _sendButton.frame = CGRectMake(_sendButton.frame.origin.x,topGap,_sendButton.frame.size.width,_sendButton.frame.size.height);
 }
 
 - (void) awakeFromNib
@@ -197,11 +206,11 @@ static BOOL isIos7;
        int h = h2 == h1 ? _inputHeightWithShadow : h2 + 24;
        int delta = h - self.frame.size.height;
        CGRect r2 = CGRectMake(0, self.frame.origin.y - delta, self.frame.size.width, h);
-       self.frame = r2; //CGRectMake(0, self.frame.origin.y - delta, self.superview.frame.size.width, h);
+       self.frame = r2;
        _inputBackgroundView.frame = CGRectMake(0, 0, self.frame.size.width, h);
        
        CGRect r = _textView.frame;
-       r.origin.y = 12;
+       r.origin.y = topGap;
        r.size.height = h - 18;
        _textView.frame = r;
        

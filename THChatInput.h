@@ -15,13 +15,14 @@
 @end
 
 @interface THChatInput : UIView <UITextViewDelegate>
-
+{
+    CGFloat topGap;
+}
 @property (assign) IBOutlet id<THChatInputDelegate> delegate;
 
 @property (assign) int inputHeight;
 @property (assign) int inputHeightWithShadow;
 @property (assign) BOOL autoResizeOnKeyboardVisibilityChanged;
-
 @property (strong, nonatomic) UIButton* sendButton;
 @property (strong, nonatomic) UIButton* attachButton;
 @property (strong, nonatomic) UIButton* emojiButton;
