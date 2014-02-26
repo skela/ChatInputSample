@@ -5,10 +5,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface THChatInput : UIView <UITextViewDelegate> {
+@class THChatInput;
+@protocol THChatInputDelegate <UITextViewDelegate>
+- (void)chat:(THChatInput*)input sendWasPressed:(NSString*)text;
+@optional
+- (void)chatShowAttachInput:(THChatInput*)input;
+@optional
+- (void)chatShowEmojiInput:(THChatInput*)input;
+@end
 
-}
-@property (assign) IBOutlet id delegate;
+@interface THChatInput : UIView <UITextViewDelegate>
+
+@property (assign) IBOutlet id<THChatInputDelegate> delegate;
 
 @property (assign) int inputHeight;
 @property (assign) int inputHeightWithShadow;
@@ -20,9 +28,10 @@
 @property (strong, nonatomic) UITextView* textView;
 @property (strong, nonatomic) UILabel* lblPlaceholder;
 @property (strong, nonatomic) UIImageView* inputBackgroundView;
+@property (strong, nonatomic) UITextField *textViewBackgroundView;
 
-- (void) fitText;
-
-- (void) setText:(NSString*)text;
+- (NSString*)text;
+- (void)setText:(NSString*)text;
+- (void)setPlaceholder:(NSString*)text;
 
 @end

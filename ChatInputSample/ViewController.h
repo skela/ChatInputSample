@@ -10,7 +10,7 @@
 #import "THChatInput.h"
 
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <THChatInputDelegate>
 
 @property (retain, nonatomic) IBOutlet UITextView *textView;
 

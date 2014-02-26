@@ -21,21 +21,9 @@
    
    [super viewDidLoad];
 	
-   _chatInput.backgroundColor = [UIColor clearColor];
-   _chatInput.inputBackgroundView.image = [[UIImage imageNamed:@"Chat_Footer_BG.png"] stretchableImageWithLeftCapWidth:80 topCapHeight:25];
-   
-	[_chatInput.attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp.png"] forState:UIControlStateNormal];
-	[_chatInput.attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp_Pressed.png"] forState:UIControlStateHighlighted];
-	[_chatInput.attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp_Pressed.png"] forState:UIControlStateSelected];
-   
-	[_chatInput.emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon.png"] forState:UIControlStateNormal];
-	[_chatInput.emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon_Pressed.png"] forState:UIControlStateHighlighted];
-	[_chatInput.emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon_Pressed.png"] forState:UIControlStateSelected];
-
-   [_chatInput.sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button.png"] forState:UIControlStateNormal];
-	[_chatInput.sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateHighlighted];
-	[_chatInput.sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateSelected];
-	[_chatInput.sendButton setTitle:@"Send" forState:UIControlStateNormal];
+    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView:)];
+    [self.view addGestureRecognizer:tapper];
+    [tapper release];
 }
 
 - (void) didReceiveMemoryWarning {
@@ -59,28 +47,34 @@
    [super viewDidUnload];
 }
 
-- (void) sendButtonPressed:(id)sender {
-   
-   _textView.text = _chatInput.textView.text;
-   
-   _chatInput.textView.text = @"";
-   [_chatInput fitText];
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
-
-- (void) showEmojiInput:(id)sender {
-   
-   _chatInput.textView.inputView = _chatInput.textView.inputView == nil ? _emojiInputView : nil;
-   
-   [_chatInput.textView reloadInputViews];
+- (void)tappedView:(UITapGestureRecognizer*)tapper
+{
+    [_chatInput resignFirstResponder];
 }
 
-- (void) returnButtonPressed:(id)sender {
-   
-   _textView.text = [sender text];
-   
-   _chatInput.textView.text = @"";
-   [_chatInput fitText];
+#pragma mark - THChatInputDelegate
+
+- (void)chat:(THChatInput*)input sendWasPressed:(NSString*)text
+{
+    _textView.text = text;
+    [_chatInput setText:@""];
+}
+
+- (void)chatShowEmojiInput:(THChatInput*)input
+{
+    _chatInput.textView.inputView = _chatInput.textView.inputView == nil ? _emojiInputView : nil;
+    
+    [_chatInput.textView reloadInputViews];
+}
+
+- (void)chatShowAttachInput:(THChatInput*)input
+{
+    
 }
 
 @end
