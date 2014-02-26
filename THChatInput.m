@@ -125,6 +125,7 @@ static BOOL isIos7;
 	// Send button
 	_sendButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
 	_sendButton.frame = CGRectMake(size.width - 64.0f, 12.0f, 58.0f, 27.0f);
+    _sendButton.hidden = YES;
 	_sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
    //	[_sendButton setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.4f] forState:UIControlStateNormal];
    //	[_sendButton setTitleShadowColor:[UIColor colorWithRed:0.325f green:0.463f blue:0.675f alpha:1.0f] forState:UIControlStateNormal];
@@ -171,7 +172,7 @@ static BOOL isIos7;
     [super layoutSubviews];
     
     CGFloat x = 70;
-    CGFloat w = self.frame.size.width - _attachButton.frame.size.width - _emojiButton.frame.size.width - _sendButton.frame.size.width-12*2-1;
+    CGFloat w = self.frame.size.width - _attachButton.frame.size.width - _emojiButton.frame.size.width - 10 - (_sendButton.hidden ? 0 : (_sendButton.frame.size.width+12+3));
     CGFloat d = 0;
     if (_attachButton.hidden) { d = _attachButton.frame.size.width; }
     else d = 0;
