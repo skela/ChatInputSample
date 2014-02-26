@@ -61,14 +61,10 @@ static BOOL isIos7;
    
     CGSize size = self.frame.size;
    
-   // Input
 	_inputBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
 	_inputBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
    _inputBackgroundView.contentMode = UIViewContentModeScaleToFill;
-	//_inputBackgroundView.userInteractionEnabled = YES;
-   //_inputBackgroundView.alpha = .5;
    _inputBackgroundView.backgroundColor = [UIColor clearColor];
-   //_inputBackgroundView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:.5];
 	[self addSubview:_inputBackgroundView];
    [_inputBackgroundView release];
    
@@ -77,15 +73,11 @@ static BOOL isIos7;
 	_textViewBackgroundView.autoresizingMask = UIViewAutoresizingNone;
     _textViewBackgroundView.userInteractionEnabled = NO;
     _textViewBackgroundView.enabled = NO;
-//    _textViewBackgroundView.contentMode = UIViewContentModeScaleToFill;
- //   _textViewBackgroundView.backgroundColor = [UIColor clearColor];
 	[self addSubview:_textViewBackgroundView];
     [_textViewBackgroundView release];
     
-	// Text field
 	_textView = [[UITextView alloc] initWithFrame:CGRectMake(70.0f, topGap, 185, 0)];
    _textView.backgroundColor = [UIColor clearColor];
-   //_textView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:.3];
 	_textView.delegate = self;
    _textView.contentInset = UIEdgeInsetsMake(-4, -2, -4, 0);
    _textView.showsVerticalScrollIndicator = NO;
@@ -105,7 +97,6 @@ static BOOL isIos7;
 	[self addSubview:_lblPlaceholder];
    [_lblPlaceholder release];
    
-	// Attach buttons
 	_attachButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
     _attachButton.hidden = YES;
 	_attachButton.frame = CGRectMake(6.0f, topGap, 26.0f, 27.0f);
@@ -122,13 +113,10 @@ static BOOL isIos7;
 	[self addSubview:_emojiButton];
    [_emojiButton release];
 	
-	// Send button
 	_sendButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
 	_sendButton.frame = CGRectMake(size.width - 64.0f, 12.0f, 58.0f, 27.0f);
     _sendButton.hidden = YES;
 	_sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-   //	[_sendButton setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.4f] forState:UIControlStateNormal];
-   //	[_sendButton setTitleShadowColor:[UIColor colorWithRed:0.325f green:0.463f blue:0.675f alpha:1.0f] forState:UIControlStateNormal];
    [_sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self addSubview:_sendButton];
    [_sendButton release];
