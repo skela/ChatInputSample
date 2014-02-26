@@ -56,7 +56,7 @@ static BOOL isIos7;
 - (void) composeView
 {
     isIos7 = [[[UIDevice currentDevice] systemVersion] floatValue]>=7;
-    
+    keyboardAnimationDuration = 0.25f;
     topGap = isIos7 ? 8 : 12;
    
     CGSize size = self.frame.size;
@@ -190,6 +190,20 @@ static BOOL isIos7;
    [self composeView];
 }
 
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+    [super willMoveToSuperview:newSuperview];
+    
+    if (newSuperview == nil)
+    {
+        [self listenForKeyboardNotifications:NO];
+    }
+    else
+    {
+        [self listenForKeyboardNotifications:YES];
+    }
+}
+
 - (void) adjustTextInputHeightForText:(NSString*)text animated:(BOOL)animated
 {
    int h1 = [text sizeForFont:_textView.font].height;
@@ -262,18 +276,68 @@ static BOOL isIos7;
     _lblPlaceholder.text = text;
 }
 
+#pragma mark - Keyboard Notifications
+
+- (void)listenForKeyboardNotifications:(BOOL)listen
+{
+    if (listen)
+    {
+        [self listenForKeyboardNotifications:NO];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    }
+}
+
+- (void)keyboardWillShow:(NSNotification*)n
+{
+    NSNumber *d = [[n userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    if (d!=nil && [d isKindOfClass:[NSNumber class]])
+        keyboardAnimationDuration = [d floatValue];
+    d = [[n userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    if (d!=nil && [d isKindOfClass:[NSNumber class]])
+        keyboardAnimationCurve = [d integerValue];
+}
+
+- (void)keyboardWillHide:(NSNotification*)n
+{
+    NSNumber *d = [[n userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    if (d!=nil && [d isKindOfClass:[NSNumber class]])
+        keyboardAnimationDuration = [d floatValue];
+    d = [[n userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    if (d!=nil && [d isKindOfClass:[NSNumber class]])
+        keyboardAnimationCurve = [d integerValue];
+}
+
+static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve curve)
+{
+    UIViewAnimationOptions opt = (UIViewAnimationOptions)curve;
+    return opt << 16;
+}
+
 #pragma mark - UITextFieldDelegate Delegate
 
 - (void) textViewDidBeginEditing:(UITextView*)textView
 {
    if (_autoResizeOnKeyboardVisibilityChanged)
    {
-      [UIView animateWithDuration:.25f animations:^
+       UIViewAnimationOptions opt = animationOptionsWithCurve(keyboardAnimationCurve);
+       
+       [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:opt animations:^
        {
          CGRect r = self.frame;
          r.origin.y -= 216;
          [self setFrame:r];
-      }];
+      }
+        completion:^(BOOL fin)
+        {
+            
+        }
+        ];
       [self fitText];
    }
    if ([_delegate respondsToSelector:@selector(textViewDidBeginEditing:)])
@@ -284,11 +348,19 @@ static BOOL isIos7;
 {
    if (_autoResizeOnKeyboardVisibilityChanged)
    {
-      [UIView animateWithDuration:.25f animations:^{
+       UIViewAnimationOptions opt = animationOptionsWithCurve(keyboardAnimationCurve);
+       
+       [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:opt animations:^
+       {
          CGRect r = self.frame;
          r.origin.y += 216;
          [self setFrame:r];
-      }];
+      }
+        completion:^(BOOL fin)
+        {
+            
+        }
+        ];
       
       [self fitText];
    }

@@ -17,6 +17,8 @@
 @interface THChatInput : UIView <UITextViewDelegate>
 {
     CGFloat topGap;
+    CGFloat keyboardAnimationDuration;
+    UIViewAnimationCurve keyboardAnimationCurve;
 }
 @property (assign) IBOutlet id<THChatInputDelegate> delegate;
 
