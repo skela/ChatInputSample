@@ -90,6 +90,7 @@ static BOOL isIos7;
    _textView.contentInset = UIEdgeInsetsMake(-4, -2, -4, 0);
    _textView.showsVerticalScrollIndicator = NO;
    _textView.showsHorizontalScrollIndicator = NO;
+    _textView.returnKeyType = UIReturnKeySend;
 	_textView.font = [UIFont systemFontOfSize:15.0f];
 	[self addSubview:_textView];
    [_textView release];
