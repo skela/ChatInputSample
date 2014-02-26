@@ -208,7 +208,7 @@ static BOOL isIos7;
 - (void) adjustTextInputHeightForText:(NSString*)text animated:(BOOL)animated
 {
    int h1 = [text sizeForFont:textView.font].height;
-   int h2 = [text sizeForFont:textView.font constrainedToSize:CGSizeMake(textView.frame.size.width - 16, 170.0f) lineBreakMode:UILineBreakModeWordWrap].height;
+   int h2 = [text sizeForFont:textView.font constrainedToSize:CGSizeMake(textView.frame.size.width - 16, 170.0f) lineBreakMode:NSLineBreakByWordWrapping].height;
    
    [UIView animateWithDuration:(animated ? .1f : 0) animations:^
     {
