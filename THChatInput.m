@@ -6,6 +6,43 @@
 
 #import "THChatInput.h"
 
+@interface NSString (THChatInput)
+@end
+
+@implementation NSString (THChatInput)
+
+- (CGSize) sizeForFont:(UIFont *)font
+{
+    if ([self respondsToSelector:@selector(sizeWithAttributes:)])
+    {
+        NSDictionary* attribs = @{NSFontAttributeName:font};
+        return ([self sizeWithAttributes:attribs]);
+    }
+    return ([self sizeWithFont:font]);
+}
+
+- (CGSize) sizeForFont:(UIFont*)font
+        constrainedToSize:(CGSize)constraint
+            lineBreakMode:(NSLineBreakMode)lineBreakMode
+{
+    CGSize size;
+    if ([self respondsToSelector:@selector(sizeWithAttributes:)])
+    {
+        NSDictionary *attributes = @{NSFontAttributeName:font};
+        
+        CGSize boundingBox = [self boundingRectWithSize:constraint options: NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+        
+        size = CGSizeMake(ceil(boundingBox.width), ceil(boundingBox.height));
+    }
+    else
+    {
+        size = [self sizeWithFont:font constrainedToSize:constraint lineBreakMode:lineBreakMode];
+    }
+    
+    return size;
+}
+
+@end
 
 @implementation THChatInput
 
@@ -90,8 +127,8 @@
 
 - (void) adjustTextInputHeightForText:(NSString*)text animated:(BOOL)animated {
    
-   int h1 = [text sizeWithFont:_textView.font].height;
-   int h2 = [text sizeWithFont:_textView.font constrainedToSize:CGSizeMake(_textView.frame.size.width - 16, 170.0f) lineBreakMode:UILineBreakModeWordWrap].height;
+   int h1 = [text sizeForFont:_textView.font].height;
+   int h2 = [text sizeForFont:_textView.font constrainedToSize:CGSizeMake(_textView.frame.size.width - 16, 170.0f) lineBreakMode:UILineBreakModeWordWrap].height;
    
    [UIView animateWithDuration:(animated ? .1f : 0) animations:^
     {

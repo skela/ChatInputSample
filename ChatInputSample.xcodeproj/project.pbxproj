@@ -32,7 +32,7 @@
 		9601A0E1165ACFAB00D30B22 /* Chat_Send_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0D3165ACFAB00D30B22 /* Chat_Send_Button@2x.png */; };
 		9601A0E2165ACFAB00D30B22 /* Chat_Send_Button_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0D4165ACFAB00D30B22 /* Chat_Send_Button_Pressed.png */; };
 		9601A0E3165ACFAB00D30B22 /* Chat_Send_Button_Pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9601A0D5165ACFAB00D30B22 /* Chat_Send_Button_Pressed@2x.png */; };
-		9601A0E6165ACFDD00D30B22 /* THChatInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601A0E5165ACFDD00D30B22 /* THChatInput.m */; };
+		C6E04F0518BD9B1D008C2105 /* THChatInput.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E04F0418BD9B1D008C2105 /* THChatInput.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,8 +66,8 @@
 		9601A0D3165ACFAB00D30B22 /* Chat_Send_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat_Send_Button@2x.png"; sourceTree = "<group>"; };
 		9601A0D4165ACFAB00D30B22 /* Chat_Send_Button_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_Send_Button_Pressed.png; sourceTree = "<group>"; };
 		9601A0D5165ACFAB00D30B22 /* Chat_Send_Button_Pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chat_Send_Button_Pressed@2x.png"; sourceTree = "<group>"; };
-		9601A0E4165ACFDD00D30B22 /* THChatInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THChatInput.h; sourceTree = "<group>"; };
-		9601A0E5165ACFDD00D30B22 /* THChatInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THChatInput.m; sourceTree = "<group>"; };
+		C6E04F0318BD9B1D008C2105 /* THChatInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THChatInput.h; sourceTree = "<group>"; };
+		C6E04F0418BD9B1D008C2105 /* THChatInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THChatInput.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +87,8 @@
 		9601A095165ACF0B00D30B22 = {
 			isa = PBXGroup;
 			children = (
+				C6E04F0318BD9B1D008C2105 /* THChatInput.h */,
+				C6E04F0418BD9B1D008C2105 /* THChatInput.m */,
 				9601A0AA165ACF0C00D30B22 /* ChatInputSample */,
 				9601A0A3165ACF0C00D30B22 /* Frameworks */,
 				9601A0A1165ACF0C00D30B22 /* Products */,
@@ -119,8 +121,6 @@
 				9601A0BC165ACF0C00D30B22 /* ViewController.h */,
 				9601A0BD165ACF0C00D30B22 /* ViewController.m */,
 				9601A0BF165ACF0C00D30B22 /* ViewController.xib */,
-				9601A0E4165ACFDD00D30B22 /* THChatInput.h */,
-				9601A0E5165ACFDD00D30B22 /* THChatInput.m */,
 				9601A0C7165ACFAB00D30B22 /* Resources */,
 				9601A0AB165ACF0C00D30B22 /* Supporting Files */,
 			);
@@ -242,10 +242,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6E04F0518BD9B1D008C2105 /* THChatInput.m in Sources */,
 				9601A0B1165ACF0C00D30B22 /* main.m in Sources */,
 				9601A0B5165ACF0C00D30B22 /* AppDelegate.m in Sources */,
 				9601A0BE165ACF0C00D30B22 /* ViewController.m in Sources */,
-				9601A0E6165ACFDD00D30B22 /* THChatInput.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,7 +325,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatInputSample/ChatInputSample-Prefix.pch";
 				INFOPLIST_FILE = "ChatInputSample/ChatInputSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -337,7 +337,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatInputSample/ChatInputSample-Prefix.pch";
 				INFOPLIST_FILE = "ChatInputSample/ChatInputSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -362,6 +362,7 @@
 				9601A0C6165ACF0C00D30B22 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
