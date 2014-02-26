@@ -125,12 +125,8 @@ static BOOL isIos7;
 	_sendButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
 	_sendButton.frame = CGRectMake(size.width - 64.0f, 12.0f, 58.0f, 27.0f);
 	_sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-	_sendButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-	_sendButton.titleLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
    //	[_sendButton setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.4f] forState:UIControlStateNormal];
    //	[_sendButton setTitleShadowColor:[UIColor colorWithRed:0.325f green:0.463f blue:0.675f alpha:1.0f] forState:UIControlStateNormal];
-	[_sendButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-	[_sendButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
    [_sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self addSubview:_sendButton];
    [_sendButton release];
@@ -140,11 +136,22 @@ static BOOL isIos7;
     if (isIos7)
     {
         self.backgroundColor = [UIColor colorWithRed:(0xD9 / 255.0) green:(0xDC / 255.0) blue:(0xE0 / 255.0) alpha:1.0];
+        [_sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_sendButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
     }
     else
     {
         self.backgroundColor = [UIColor clearColor];
         _inputBackgroundView.image = [[UIImage imageNamed:@"Chat_Footer_BG.png"] stretchableImageWithLeftCapWidth:80 topCapHeight:25];
+        
+        [_sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button.png"] forState:UIControlStateNormal];
+        [_sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateHighlighted];
+        [_sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateSelected];
+        _sendButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        _sendButton.titleLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
+        [_sendButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [_sendButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
     }
     
 	[_attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp.png"] forState:UIControlStateNormal];
@@ -155,9 +162,6 @@ static BOOL isIos7;
 	[_emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon_Pressed.png"] forState:UIControlStateHighlighted];
 	[_emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon_Pressed.png"] forState:UIControlStateSelected];
     
-    [_sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button.png"] forState:UIControlStateNormal];
-	[_sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateHighlighted];
-	[_sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateSelected];
 	[_sendButton setTitle:@"Send" forState:UIControlStateNormal];
 }
 
