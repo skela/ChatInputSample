@@ -63,7 +63,7 @@ static BOOL isIos7;
    
    // Input
 	_inputBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-	_inputBackgroundView.autoresizingMask = UIViewAutoresizingNone;
+	_inputBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
    _inputBackgroundView.contentMode = UIViewContentModeScaleToFill;
 	//_inputBackgroundView.userInteractionEnabled = YES;
    //_inputBackgroundView.alpha = .5;
@@ -124,7 +124,7 @@ static BOOL isIos7;
 	// Send button
 	_sendButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
 	_sendButton.frame = CGRectMake(size.width - 64.0f, 12.0f, 58.0f, 27.0f);
-	_sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+	_sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
 	_sendButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
 	_sendButton.titleLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
    //	[_sendButton setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.4f] forState:UIControlStateNormal];
@@ -166,7 +166,7 @@ static BOOL isIos7;
     [super layoutSubviews];
     
     CGFloat x = 70;
-    CGFloat w = 185;
+    CGFloat w = self.frame.size.width - _attachButton.frame.size.width - _emojiButton.frame.size.width - _sendButton.frame.size.width-12*2-1;
     CGFloat d = 0;
     if (_attachButton.hidden) { d = _attachButton.frame.size.width; }
     else d = 0;
