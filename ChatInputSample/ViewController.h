@@ -12,9 +12,9 @@
 
 @interface ViewController : UIViewController <THChatInputDelegate>
 
-@property (retain, nonatomic) IBOutlet UITextView *textView;
+@property (strong, nonatomic) IBOutlet UITextView *textView;
 
-@property (retain, nonatomic) IBOutlet THChatInput *chatInput;
-@property (retain, nonatomic) IBOutlet UIView *emojiInputView;
+@property (strong, nonatomic) IBOutlet THChatInput *chatInput;
+@property (strong, nonatomic) IBOutlet UIView *emojiInputView;
 
 @end

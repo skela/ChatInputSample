@@ -45,6 +45,13 @@
 @end
 
 @implementation THChatInput
+@synthesize inputBackgroundView;
+@synthesize textViewBackgroundView;
+@synthesize textView;
+@synthesize lblPlaceholder;
+@synthesize attachButton;
+@synthesize emojiButton;
+@synthesize sendButton;
 
 static BOOL isIos7;
 
@@ -60,100 +67,97 @@ static BOOL isIos7;
     keyboardHeight = 216;
     topGap = isIos7 ? 8 : 12;
    
+    inputHeight = 38.0f;
+    inputHeightWithShadow = 44.0f;
+    autoResizeOnKeyboardVisibilityChanged = YES;
+    
     CGSize size = self.frame.size;
    
-	_inputBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-	_inputBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-   _inputBackgroundView.contentMode = UIViewContentModeScaleToFill;
-   _inputBackgroundView.backgroundColor = [UIColor clearColor];
-	[self addSubview:_inputBackgroundView];
-   [_inputBackgroundView release];
+	self.inputBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+	inputBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    inputBackgroundView.contentMode = UIViewContentModeScaleToFill;
+    inputBackgroundView.backgroundColor = [UIColor clearColor];
+	[self addSubview:inputBackgroundView];
    
-    _textViewBackgroundView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    _textViewBackgroundView.borderStyle = UITextBorderStyleRoundedRect;
-	_textViewBackgroundView.autoresizingMask = UIViewAutoresizingNone;
-    _textViewBackgroundView.userInteractionEnabled = NO;
-    _textViewBackgroundView.enabled = NO;
-	[self addSubview:_textViewBackgroundView];
-    [_textViewBackgroundView release];
+    self.textViewBackgroundView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    textViewBackgroundView.borderStyle = UITextBorderStyleRoundedRect;
+	textViewBackgroundView.autoresizingMask = UIViewAutoresizingNone;
+    textViewBackgroundView.userInteractionEnabled = NO;
+    textViewBackgroundView.enabled = NO;
+	[self addSubview:textViewBackgroundView];
     
-	_textView = [[UITextView alloc] initWithFrame:CGRectMake(70.0f, topGap, 185, 0)];
-   _textView.backgroundColor = [UIColor clearColor];
-	_textView.delegate = self;
-   _textView.contentInset = UIEdgeInsetsMake(-4, -2, -4, 0);
-   _textView.showsVerticalScrollIndicator = NO;
-   _textView.showsHorizontalScrollIndicator = NO;
-    _textView.returnKeyType = UIReturnKeySend;
-	_textView.font = [UIFont systemFontOfSize:15.0f];
-	[self addSubview:_textView];
-   [_textView release];
+	self.textView = [[UITextView alloc] initWithFrame:CGRectMake(70.0f, topGap, 185, 0)];
+    textView.backgroundColor = [UIColor clearColor];
+	textView.delegate = self;
+    textView.contentInset = UIEdgeInsetsMake(-4, -2, -4, 0);
+    textView.showsVerticalScrollIndicator = NO;
+    textView.showsHorizontalScrollIndicator = NO;
+    textView.returnKeyType = UIReturnKeySend;
+	textView.font = [UIFont systemFontOfSize:15.0f];
+	[self addSubview:textView];
    
    [self adjustTextInputHeightForText:@"" animated:NO];
    
-   _lblPlaceholder = [[UILabel alloc] initWithFrame:CGRectMake(78.0f, topGap+2, 160, 20)];
-   _lblPlaceholder.font = [UIFont systemFontOfSize:15.0f];
-   _lblPlaceholder.text = @"Type here...";
-   _lblPlaceholder.textColor = [UIColor lightGrayColor];
-   _lblPlaceholder.backgroundColor = [UIColor clearColor];
-	[self addSubview:_lblPlaceholder];
-   [_lblPlaceholder release];
+    self.lblPlaceholder = [[UILabel alloc] initWithFrame:CGRectMake(78.0f, topGap+2, 160, 20)];
+    lblPlaceholder.font = [UIFont systemFontOfSize:15.0f];
+    lblPlaceholder.text = @"Type here...";
+    lblPlaceholder.textColor = [UIColor lightGrayColor];
+    lblPlaceholder.backgroundColor = [UIColor clearColor];
+	[self addSubview:lblPlaceholder];
    
-	_attachButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-    _attachButton.hidden = YES;
-	_attachButton.frame = CGRectMake(6.0f, topGap, 26.0f, 27.0f);
-	_attachButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-   [_attachButton addTarget:self action:@selector(showAttachInput:) forControlEvents:UIControlEventTouchUpInside];
-	[self addSubview:_attachButton];
-   [_attachButton release];
+	self.attachButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    attachButton.hidden = YES;
+	attachButton.frame = CGRectMake(6.0f, topGap, 26.0f, 27.0f);
+	attachButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [attachButton addTarget:self action:@selector(showAttachInput:) forControlEvents:UIControlEventTouchUpInside];
+	[self addSubview:attachButton];
 	
-	_emojiButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-	_emojiButton.frame = CGRectMake(12.0f + _attachButton.frame.size.width, topGap, 26.0f, 27.0f);
-    _emojiButton.hidden = YES;
-	_emojiButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-   [_emojiButton addTarget:self action:@selector(showEmojiInput:) forControlEvents:UIControlEventTouchUpInside];
-	[self addSubview:_emojiButton];
-   [_emojiButton release];
+	self.emojiButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	emojiButton.frame = CGRectMake(12.0f + attachButton.frame.size.width, topGap, 26.0f, 27.0f);
+    emojiButton.hidden = YES;
+	emojiButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [emojiButton addTarget:self action:@selector(showEmojiInput:) forControlEvents:UIControlEventTouchUpInside];
+	[self addSubview:emojiButton];
 	
-	_sendButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-	_sendButton.frame = CGRectMake(size.width - 64.0f, 12.0f, 58.0f, 27.0f);
-    _sendButton.hidden = YES;
-	_sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-   [_sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-	[self addSubview:_sendButton];
-   [_sendButton release];
+	self.sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	sendButton.frame = CGRectMake(size.width - 64.0f, 12.0f, 58.0f, 27.0f);
+    sendButton.hidden = YES;
+	sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
+    [sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[self addSubview:sendButton];
    
-   [self sendSubviewToBack:_inputBackgroundView];
+   [self sendSubviewToBack:inputBackgroundView];
     
     if (isIos7)
     {
         self.backgroundColor = [UIColor colorWithRed:(0xD9 / 255.0) green:(0xDC / 255.0) blue:(0xE0 / 255.0) alpha:1.0];
-        [_sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_sendButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
+        [sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [sendButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
     }
     else
     {
         self.backgroundColor = [UIColor clearColor];
-        _inputBackgroundView.image = [[UIImage imageNamed:@"Chat_Footer_BG.png"] stretchableImageWithLeftCapWidth:80 topCapHeight:25];
+        inputBackgroundView.image = [[UIImage imageNamed:@"Chat_Footer_BG.png"] stretchableImageWithLeftCapWidth:80 topCapHeight:25];
         
-        [_sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button.png"] forState:UIControlStateNormal];
-        [_sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateHighlighted];
-        [_sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateSelected];
-        _sendButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-        _sendButton.titleLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
-        [_sendButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-        [_sendButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button.png"] forState:UIControlStateNormal];
+        [sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateHighlighted];
+        [sendButton setBackgroundImage:[UIImage imageNamed:@"Chat_Send_Button_Pressed.png"] forState:UIControlStateSelected];
+        [sendButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
+        [sendButton.titleLabel setShadowOffset:CGSizeMake(0.0f, 1.0f)];
+        [sendButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [sendButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
     }
     
-	[_attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp.png"] forState:UIControlStateNormal];
-	[_attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp_Pressed.png"] forState:UIControlStateHighlighted];
-	[_attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp_Pressed.png"] forState:UIControlStateSelected];
+	[attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp.png"] forState:UIControlStateNormal];
+	[attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp_Pressed.png"] forState:UIControlStateHighlighted];
+	[attachButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_ArrowUp_Pressed.png"] forState:UIControlStateSelected];
     
-	[_emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon.png"] forState:UIControlStateNormal];
-	[_emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon_Pressed.png"] forState:UIControlStateHighlighted];
-	[_emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon_Pressed.png"] forState:UIControlStateSelected];
+	[emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon.png"] forState:UIControlStateNormal];
+	[emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon_Pressed.png"] forState:UIControlStateHighlighted];
+	[emojiButton setBackgroundImage:[UIImage imageNamed:@"Chat_Footer_Smiley_Icon_Pressed.png"] forState:UIControlStateSelected];
     
-	[_sendButton setTitle:@"Send" forState:UIControlStateNormal];
+	[sendButton setTitle:@"Send" forState:UIControlStateNormal];
 }
 
 - (void)layoutSubviews
@@ -161,33 +165,29 @@ static BOOL isIos7;
     [super layoutSubviews];
     
     CGFloat x = 70;
-    CGFloat w = self.frame.size.width - _attachButton.frame.size.width - _emojiButton.frame.size.width - 10 - (_sendButton.hidden ? 0 : (_sendButton.frame.size.width+12+3));
+    CGFloat w = self.frame.size.width - attachButton.frame.size.width - emojiButton.frame.size.width - 10 - (sendButton.hidden ? 0 : (sendButton.frame.size.width+12+3));
     CGFloat d = 0;
-    if (_attachButton.hidden) { d = _attachButton.frame.size.width; }
+    if (attachButton.hidden) { d = attachButton.frame.size.width; }
     else d = 0;
     x = x - d; w = w + d;
-    if (_emojiButton.hidden) { d = _emojiButton.frame.size.width; }
+    if (emojiButton.hidden) { d = emojiButton.frame.size.width; }
     else d = 0;
     x = x - d; w = w + d;
     
-    if (_attachButton.hidden && _emojiButton.hidden)
+    if (attachButton.hidden && emojiButton.hidden)
         x = 5;
     
-    _textView.frame = CGRectMake(x, _textView.frame.origin.y, w, _textView.frame.size.height);
-    CGRect f = _textView.frame;
+    textView.frame = CGRectMake(x, textView.frame.origin.y, w, textView.frame.size.height);
+    CGRect f = textView.frame;
     f.size.height = f.size.height+(isIos7?3:0);
-    _textViewBackgroundView.frame = f;
-    _lblPlaceholder.frame = CGRectMake(x+8, topGap+2, 160, 20);
+    textViewBackgroundView.frame = f;
+    lblPlaceholder.frame = CGRectMake(x+8, topGap+2, 160, 20);
     
-    _sendButton.frame = CGRectMake(_sendButton.frame.origin.x,topGap,_sendButton.frame.size.width,_sendButton.frame.size.height);
+    sendButton.frame = CGRectMake(sendButton.frame.origin.x,topGap,sendButton.frame.size.width,sendButton.frame.size.height);
 }
 
 - (void) awakeFromNib
 {
-   _inputHeight = 38.0f;
-   _inputHeightWithShadow = 44.0f;
-   _autoResizeOnKeyboardVisibilityChanged = YES;
-
    [self composeView];
 }
 
@@ -207,21 +207,21 @@ static BOOL isIos7;
 
 - (void) adjustTextInputHeightForText:(NSString*)text animated:(BOOL)animated
 {
-   int h1 = [text sizeForFont:_textView.font].height;
-   int h2 = [text sizeForFont:_textView.font constrainedToSize:CGSizeMake(_textView.frame.size.width - 16, 170.0f) lineBreakMode:UILineBreakModeWordWrap].height;
+   int h1 = [text sizeForFont:textView.font].height;
+   int h2 = [text sizeForFont:textView.font constrainedToSize:CGSizeMake(textView.frame.size.width - 16, 170.0f) lineBreakMode:UILineBreakModeWordWrap].height;
    
    [UIView animateWithDuration:(animated ? .1f : 0) animations:^
     {
-       int h = h2 == h1 ? _inputHeightWithShadow : h2 + 24;
+       int h = h2 == h1 ? inputHeightWithShadow : h2 + 24;
        int delta = h - self.frame.size.height;
        CGRect r2 = CGRectMake(0, self.frame.origin.y - delta, self.frame.size.width, h);
        self.frame = r2;
-       _inputBackgroundView.frame = CGRectMake(0, 0, self.frame.size.width, h);
+       inputBackgroundView.frame = CGRectMake(0, 0, self.frame.size.width, h);
        
-       CGRect r = _textView.frame;
+       CGRect r = textView.frame;
        r.origin.y = topGap;
        r.size.height = h - 18;
-       _textView.frame = r;
+       textView.frame = r;
        
     } completion:^(BOOL finished)
     {
@@ -235,10 +235,6 @@ static BOOL isIos7;
    
    if (self)
    {
-      _inputHeight = 38.0f;
-      _inputHeightWithShadow = 44.0f;
-      _autoResizeOnKeyboardVisibilityChanged = YES;
-      
       [self composeView];
    }
    return self;
@@ -246,15 +242,15 @@ static BOOL isIos7;
 
 - (void) fitText
 {
-   [self adjustTextInputHeightForText:_textView.text animated:YES];
+   [self adjustTextInputHeightForText:textView.text animated:YES];
 }
 
 - (BOOL)resignFirstResponder
 {
     if (super.isFirstResponder)
         return [super resignFirstResponder];
-    else if ([_textView isFirstResponder])
-        return [_textView resignFirstResponder];
+    else if ([textView isFirstResponder])
+        return [textView resignFirstResponder];
     return NO;
 }
 
@@ -262,26 +258,26 @@ static BOOL isIos7;
 
 - (NSString*)text
 {
-    return _textView.text;
+    return textView.text;
 }
 
 - (void) setText:(NSString*)text
 {
-    _textView.text = text;
-    _lblPlaceholder.hidden = text.length > 0;
+    textView.text = text;
+    lblPlaceholder.hidden = text.length > 0;
     [self fitText];
 }
 
 - (void) setPlaceholder:(NSString*)text
 {
-    _lblPlaceholder.text = text;
+    lblPlaceholder.text = text;
 }
 
 #pragma mark - Display
 
 - (void)beganEditing
 {
-    if (_autoResizeOnKeyboardVisibilityChanged)
+    if (autoResizeOnKeyboardVisibilityChanged)
     {
         UIViewAnimationOptions opt = animationOptionsWithCurve(keyboardAnimationCurve);
 
@@ -298,7 +294,7 @@ static BOOL isIos7;
 
 - (void)endedEditing
 {
-    if (_autoResizeOnKeyboardVisibilityChanged)
+    if (autoResizeOnKeyboardVisibilityChanged)
     {
         UIViewAnimationOptions opt = animationOptionsWithCurve(keyboardAnimationCurve);
         
@@ -313,7 +309,7 @@ static BOOL isIos7;
         [self fitText];
     }
     
-    _lblPlaceholder.hidden = _textView.text.length > 0;
+    lblPlaceholder.hidden = textView.text.length > 0;
 }
 
 #pragma mark - Keyboard Notifications
@@ -364,7 +360,7 @@ static BOOL isIos7;
 
 - (void)keyboardDidShow:(NSNotification*)n
 {
-    if ([_textView isFirstResponder])
+    if ([textView isFirstResponder])
     {
         [self beganEditing];
     }
@@ -378,23 +374,23 @@ static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCu
 
 #pragma mark - UITextFieldDelegate Delegate
 
-- (void) textViewDidBeginEditing:(UITextView*)textView
+- (void) textViewDidBeginEditing:(UITextView*)textview
 {
     [self beganEditing];
     
     if ([_delegate respondsToSelector:@selector(textViewDidBeginEditing:)])
-        [_delegate performSelector:@selector(textViewDidBeginEditing:) withObject:textView];
+        [_delegate performSelector:@selector(textViewDidBeginEditing:) withObject:textview];
 }
 
-- (void) textViewDidEndEditing:(UITextView*)textView
+- (void) textViewDidEndEditing:(UITextView*)textview
 {
     [self endedEditing];
    
     if ([_delegate respondsToSelector:@selector(textViewDidEndEditing:)])
-        [_delegate performSelector:@selector(textViewDidEndEditing:) withObject:textView];
+        [_delegate performSelector:@selector(textViewDidEndEditing:) withObject:textview];
 }
 
-- (BOOL) textView:(UITextView*)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
+- (BOOL) textView:(UITextView*)textview shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
 {
    if ([text isEqualToString:@"\n"])
    {
@@ -403,19 +399,19 @@ static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCu
    }
    else if (text.length > 0)
    {
-      [self adjustTextInputHeightForText:[NSString stringWithFormat:@"%@%@", _textView.text, text] animated:YES];
+      [self adjustTextInputHeightForText:[NSString stringWithFormat:@"%@%@", textview.text, text] animated:YES];
    }
    return YES;
 }
 
-- (void) textViewDidChange:(UITextView*)textView
+- (void) textViewDidChange:(UITextView*)textview
 {
-    _lblPlaceholder.hidden = _textView.text.length > 0;
+    lblPlaceholder.hidden = textview.text.length > 0;
    
-   [self fitText];
+    [self fitText];
    
-   if ([_delegate respondsToSelector:@selector(textViewDidChange:)])
-      [_delegate performSelector:@selector(textViewDidChange:) withObject:textView];
+    if ([_delegate respondsToSelector:@selector(textViewDidChange:)])
+        [_delegate performSelector:@selector(textViewDidChange:) withObject:textview];
 }
 
 #pragma mark THChatInput Delegate
@@ -435,7 +431,7 @@ static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCu
 {
    if ([_delegate respondsToSelector:@selector(chatShowEmojiInput:)])
    {
-      if ([_textView isFirstResponder] == NO) [_textView becomeFirstResponder];
+      if ([textView isFirstResponder] == NO) [textView becomeFirstResponder];
 
       [_delegate performSelector:@selector(chatShowEmojiInput:) withObject:self];
    }

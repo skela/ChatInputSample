@@ -20,12 +20,12 @@
     CGFloat keyboardAnimationDuration;
     UIViewAnimationCurve keyboardAnimationCurve;
     CGFloat keyboardHeight;
+    int inputHeight;
+    int inputHeightWithShadow;
+    BOOL autoResizeOnKeyboardVisibilityChanged;
 }
-@property (assign) IBOutlet id<THChatInputDelegate> delegate;
+@property (weak) IBOutlet id<THChatInputDelegate> delegate;
 
-@property (assign) int inputHeight;
-@property (assign) int inputHeightWithShadow;
-@property (assign) BOOL autoResizeOnKeyboardVisibilityChanged;
 @property (strong, nonatomic) UIButton* sendButton;
 @property (strong, nonatomic) UIButton* attachButton;
 @property (strong, nonatomic) UIButton* emojiButton;

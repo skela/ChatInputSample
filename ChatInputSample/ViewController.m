@@ -23,7 +23,6 @@
 	
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView:)];
     [self.view addGestureRecognizer:tapper];
-    [tapper release];
 }
 
 - (void) didReceiveMemoryWarning {
@@ -31,13 +30,6 @@
    [super didReceiveMemoryWarning];
 }
 
-- (void) dealloc {
-   
-   [_textView release];
-   [_chatInput release];
-   [_emojiInputView release];
-   [super dealloc];
-}
 
 - (void) viewDidUnload {
    
