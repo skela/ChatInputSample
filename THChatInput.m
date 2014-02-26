@@ -57,6 +57,7 @@ static BOOL isIos7;
 {
     isIos7 = [[[UIDevice currentDevice] systemVersion] floatValue]>=7;
     keyboardAnimationDuration = 0.25f;
+    keyboardHeight = 216;
     topGap = isIos7 ? 8 : 12;
    
     CGSize size = self.frame.size;
@@ -276,6 +277,45 @@ static BOOL isIos7;
     _lblPlaceholder.text = text;
 }
 
+#pragma mark - Display
+
+- (void)beganEditing
+{
+    if (_autoResizeOnKeyboardVisibilityChanged)
+    {
+        UIViewAnimationOptions opt = animationOptionsWithCurve(keyboardAnimationCurve);
+
+        [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:opt animations:^
+        {
+             //         CGRect r = self.frame;
+             //         r.origin.y -= keyboardHeight;
+             //         [self setFrame:r];
+             self.transform = CGAffineTransformMakeTranslation(0, -keyboardHeight);
+        } completion:^(BOOL fin){}];
+        [self fitText];
+    }
+}
+
+- (void)endedEditing
+{
+    if (_autoResizeOnKeyboardVisibilityChanged)
+    {
+        UIViewAnimationOptions opt = animationOptionsWithCurve(keyboardAnimationCurve);
+        
+        [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:opt animations:^
+         {
+             //         CGRect r = self.frame;
+             //         r.origin.y += keyboardHeight;
+             //         [self setFrame:r];
+             self.transform = CGAffineTransformIdentity;
+         } completion:^(BOOL fin){}];
+        
+        [self fitText];
+    }
+    
+    _lblPlaceholder.hidden = _textView.text.length > 0;
+}
+
 #pragma mark - Keyboard Notifications
 
 - (void)listenForKeyboardNotifications:(BOOL)listen
@@ -285,32 +325,49 @@ static BOOL isIos7;
         [self listenForKeyboardNotifications:NO];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     }
     else
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    }
+}
+
+- (void)updateKeyboardProperties:(NSNotification*)n
+{
+    NSNumber *d = [[n userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    if (d!=nil && [d isKindOfClass:[NSNumber class]])
+        keyboardAnimationDuration = [d floatValue];
+    d = [[n userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    if (d!=nil && [d isKindOfClass:[NSNumber class]])
+        keyboardAnimationCurve = [d integerValue];
+    NSValue *v = [[n userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
+    if ([v isKindOfClass:[NSValue class]])
+    {
+        CGRect r = [v CGRectValue];
+        r = [self.window convertRect:r toView:self];
+        keyboardHeight = r.size.height;
     }
 }
 
 - (void)keyboardWillShow:(NSNotification*)n
 {
-    NSNumber *d = [[n userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    if (d!=nil && [d isKindOfClass:[NSNumber class]])
-        keyboardAnimationDuration = [d floatValue];
-    d = [[n userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    if (d!=nil && [d isKindOfClass:[NSNumber class]])
-        keyboardAnimationCurve = [d integerValue];
+    [self updateKeyboardProperties:n];
 }
 
 - (void)keyboardWillHide:(NSNotification*)n
 {
-    NSNumber *d = [[n userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    if (d!=nil && [d isKindOfClass:[NSNumber class]])
-        keyboardAnimationDuration = [d floatValue];
-    d = [[n userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    if (d!=nil && [d isKindOfClass:[NSNumber class]])
-        keyboardAnimationCurve = [d integerValue];
+    [self updateKeyboardProperties:n];
+}
+
+- (void)keyboardDidShow:(NSNotification*)n
+{
+    if ([_textView isFirstResponder])
+    {
+        [self beganEditing];
+    }
 }
 
 static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve curve)
@@ -323,51 +380,18 @@ static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCu
 
 - (void) textViewDidBeginEditing:(UITextView*)textView
 {
-   if (_autoResizeOnKeyboardVisibilityChanged)
-   {
-       UIViewAnimationOptions opt = animationOptionsWithCurve(keyboardAnimationCurve);
-       
-       [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:opt animations:^
-       {
-         CGRect r = self.frame;
-         r.origin.y -= 216;
-         [self setFrame:r];
-      }
-        completion:^(BOOL fin)
-        {
-            
-        }
-        ];
-      [self fitText];
-   }
-   if ([_delegate respondsToSelector:@selector(textViewDidBeginEditing:)])
-      [_delegate performSelector:@selector(textViewDidBeginEditing:) withObject:textView];
+    [self beganEditing];
+    
+    if ([_delegate respondsToSelector:@selector(textViewDidBeginEditing:)])
+        [_delegate performSelector:@selector(textViewDidBeginEditing:) withObject:textView];
 }
 
 - (void) textViewDidEndEditing:(UITextView*)textView
 {
-   if (_autoResizeOnKeyboardVisibilityChanged)
-   {
-       UIViewAnimationOptions opt = animationOptionsWithCurve(keyboardAnimationCurve);
-       
-       [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:opt animations:^
-       {
-         CGRect r = self.frame;
-         r.origin.y += 216;
-         [self setFrame:r];
-      }
-        completion:^(BOOL fin)
-        {
-            
-        }
-        ];
-      
-      [self fitText];
-   }
-   _lblPlaceholder.hidden = _textView.text.length > 0;
+    [self endedEditing];
    
-   if ([_delegate respondsToSelector:@selector(textViewDidEndEditing:)])
-      [_delegate performSelector:@selector(textViewDidEndEditing:) withObject:textView];
+    if ([_delegate respondsToSelector:@selector(textViewDidEndEditing:)])
+        [_delegate performSelector:@selector(textViewDidEndEditing:) withObject:textView];
 }
 
 - (BOOL) textView:(UITextView*)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text

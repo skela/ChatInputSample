@@ -19,6 +19,7 @@
     CGFloat topGap;
     CGFloat keyboardAnimationDuration;
     UIViewAnimationCurve keyboardAnimationCurve;
+    CGFloat keyboardHeight;
 }
 @property (assign) IBOutlet id<THChatInputDelegate> delegate;
 
