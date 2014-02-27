@@ -53,6 +53,8 @@
 @synthesize emojiButton;
 @synthesize sendButton;
 
+@synthesize keyboardHeight;
+
 static BOOL isIos7;
 
 + (BOOL)isIOS7
@@ -64,7 +66,7 @@ static BOOL isIos7;
 {
     isIos7 = [[[UIDevice currentDevice] systemVersion] floatValue]>=7;
     keyboardAnimationDuration = 0.25f;
-    keyboardHeight = 216;
+    self.keyboardHeight = 216;
     topGap = isIos7 ? 8 : 12;
    
     inputHeight = 38.0f;
@@ -223,10 +225,7 @@ static BOOL isIos7;
        r.size.height = h - 18;
        textView.frame = r;
        
-    } completion:^(BOOL finished)
-    {
-       //
-    }];
+    } completion:^(BOOL finished){ }];
 }
 
 - (id) initWithFrame:(CGRect)frame
@@ -283,10 +282,7 @@ static BOOL isIos7;
 
         [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:opt animations:^
         {
-             //         CGRect r = self.frame;
-             //         r.origin.y -= keyboardHeight;
-             //         [self setFrame:r];
-             self.transform = CGAffineTransformMakeTranslation(0, -keyboardHeight);
+             self.transform = CGAffineTransformMakeTranslation(0, -self.keyboardHeight);
         } completion:^(BOOL fin){}];
         [self fitText];
     }
@@ -300,9 +296,6 @@ static BOOL isIos7;
         
         [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:opt animations:^
          {
-             //         CGRect r = self.frame;
-             //         r.origin.y += keyboardHeight;
-             //         [self setFrame:r];
              self.transform = CGAffineTransformIdentity;
          } completion:^(BOOL fin){}];
         
@@ -321,6 +314,7 @@ static BOOL isIos7;
         [self listenForKeyboardNotifications:NO];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     }
     else
@@ -328,6 +322,7 @@ static BOOL isIos7;
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
     }
 }
 
@@ -344,18 +339,30 @@ static BOOL isIos7;
     {
         CGRect r = [v CGRectValue];
         r = [self.window convertRect:r toView:self];
-        keyboardHeight = r.size.height;
+        self.keyboardHeight = r.size.height;
     }
+    if ([_delegate respondsToSelector:@selector(chatUpdatedKeyboardProperties:)])
+        [_delegate performSelector:@selector(chatUpdatedKeyboardProperties:) withObject:self];
 }
 
 - (void)keyboardWillShow:(NSNotification*)n
 {
     [self updateKeyboardProperties:n];
+    if ([_delegate respondsToSelector:@selector(chatKeyboardWillShow:)])
+        [_delegate performSelector:@selector(chatKeyboardWillShow:) withObject:self];
 }
 
 - (void)keyboardWillHide:(NSNotification*)n
 {
     [self updateKeyboardProperties:n];
+    if ([_delegate respondsToSelector:@selector(chatKeyboardWillHide:)])
+        [_delegate performSelector:@selector(chatKeyboardWillHide:) withObject:self];
+}
+
+- (void)keyboardDidHide:(NSNotification*)n
+{
+    if ([_delegate respondsToSelector:@selector(chatKeyboardDidHide:)])
+        [_delegate performSelector:@selector(chatKeyboardDidHide:) withObject:self];
 }
 
 - (void)keyboardDidShow:(NSNotification*)n
@@ -364,6 +371,8 @@ static BOOL isIos7;
     {
         [self beganEditing];
     }
+    if ([_delegate respondsToSelector:@selector(chatKeyboardDidShow:)])
+        [_delegate performSelector:@selector(chatKeyboardDidShow:) withObject:self];
 }
 
 static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve curve)

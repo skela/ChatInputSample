@@ -9,9 +9,13 @@
 @protocol THChatInputDelegate <UITextViewDelegate>
 - (void)chat:(THChatInput*)input sendWasPressed:(NSString*)text;
 @optional
-- (void)chatShowAttachInput:(THChatInput*)input;
-@optional
-- (void)chatShowEmojiInput:(THChatInput*)input;
+- (void)chatShowAttachInput:(THChatInput*)cinput;
+- (void)chatShowEmojiInput:(THChatInput*)cinput;
+- (void)chatUpdatedKeyboardProperties:(THChatInput*)cinput;
+- (void)chatKeyboardWillShow:(THChatInput*)cinput;
+- (void)chatKeyboardDidShow:(THChatInput*)cinput;
+- (void)chatKeyboardWillHide:(THChatInput*)cinput;
+- (void)chatKeyboardDidHide:(THChatInput*)cinput;
 @end
 
 @interface THChatInput : UIView <UITextViewDelegate>
@@ -33,6 +37,8 @@
 @property (strong, nonatomic) UILabel* lblPlaceholder;
 @property (strong, nonatomic) UIImageView* inputBackgroundView;
 @property (strong, nonatomic) UITextField *textViewBackgroundView;
+
+@property (readwrite, nonatomic) CGFloat keyboardHeight;
 
 - (NSString*)text;
 - (void)setText:(NSString*)text;
