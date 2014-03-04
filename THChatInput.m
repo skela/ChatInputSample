@@ -71,7 +71,7 @@ static BOOL isIos7;
    
     inputHeight = 38.0f;
     inputHeightWithShadow = 44.0f;
-    autoResizeOnKeyboardVisibilityChanged = YES;
+    autoResizeOnKeyboardVisibilityChanged = NO;
     
     CGSize size = self.frame.size;
    
@@ -347,6 +347,8 @@ static BOOL isIos7;
 
 - (void)keyboardWillShow:(NSNotification*)n
 {
+    //NSLog(@"keyboardWillShow %@",[n description]);
+    autoResizeOnKeyboardVisibilityChanged = YES;
     [self updateKeyboardProperties:n];
     if ([_delegate respondsToSelector:@selector(chatKeyboardWillShow:)])
         [_delegate performSelector:@selector(chatKeyboardWillShow:) withObject:self];
@@ -354,6 +356,7 @@ static BOOL isIos7;
 
 - (void)keyboardWillHide:(NSNotification*)n
 {
+    //NSLog(@"keyboardWillHide %@",[n description]);
     [self updateKeyboardProperties:n];
     if ([_delegate respondsToSelector:@selector(chatKeyboardWillHide:)])
         [_delegate performSelector:@selector(chatKeyboardWillHide:) withObject:self];
@@ -361,12 +364,14 @@ static BOOL isIos7;
 
 - (void)keyboardDidHide:(NSNotification*)n
 {
+    //NSLog(@"keyboardDidHide %@",[n description]);
     if ([_delegate respondsToSelector:@selector(chatKeyboardDidHide:)])
         [_delegate performSelector:@selector(chatKeyboardDidHide:) withObject:self];
 }
 
 - (void)keyboardDidShow:(NSNotification*)n
 {
+    //NSLog(@"keyboardDidShow %@",[n description]);
     if ([textView isFirstResponder])
     {
         [self beganEditing];
@@ -395,6 +400,8 @@ static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCu
 {
     [self endedEditing];
    
+    autoResizeOnKeyboardVisibilityChanged = NO;
+    
     if ([_delegate respondsToSelector:@selector(textViewDidEndEditing:)])
         [_delegate performSelector:@selector(textViewDidEndEditing:) withObject:textview];
 }
