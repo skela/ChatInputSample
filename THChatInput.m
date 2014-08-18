@@ -18,7 +18,10 @@
         NSDictionary* attribs = @{NSFontAttributeName:font};
         return ([self sizeWithAttributes:attribs]);
     }
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     return ([self sizeWithFont:font]);
+    #pragma GCC diagnostic pop
 }
 
 - (CGSize) sizeForFont:(UIFont*)font
@@ -36,7 +39,10 @@
     }
     else
     {
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         size = [self sizeWithFont:font constrainedToSize:constraint lineBreakMode:lineBreakMode];
+        #pragma GCC diagnostic pop
     }
     
     return size;
