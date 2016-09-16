@@ -196,7 +196,8 @@ static BOOL isIos7;
 
 - (void) awakeFromNib
 {
-   [self composeView];
+    [super awakeFromNib];
+    [self composeView];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
